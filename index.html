@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>London Pub Finder</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">London Pub Finder</p>
+          <h1>Find the fairest pub for the group</h1>
+        </div>
+        <nav class="topnav" aria-label="Main navigation">
+          <button class="nav-tab is-active" data-view="search" type="button">Search</button>
+          <button class="nav-tab" data-view="results" type="button">Results</button>
+          <button class="nav-tab" data-view="admin" type="button">Admin</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="view is-active" id="view-search" aria-labelledby="search-heading">
+          <div class="workspace-grid">
+            <form class="control-panel" id="search-form">
+              <div class="panel-head">
+                <div>
+                  <p class="section-kicker">Group</p>
+                  <h2 id="search-heading">Starting points</h2>
+                </div>
+                <button class="icon-button" id="add-person" type="button" aria-label="Add person" title="Add person">+</button>
+              </div>
+
+              <div id="people-list" class="people-list"></div>
+
+              <datalist id="location-suggestions"></datalist>
+
+              <div class="button-row">
+                <button class="secondary-button" id="use-current-location" type="button">Use current location</button>
+                <button class="secondary-button" id="load-demo" type="button">Load demo group</button>
+              </div>
+
+              <div class="field-group">
+                <label for="meetup-style">Meetup style</label>
+                <select id="meetup-style">
+                  <option value="middle">Meet in the middle</option>
+                  <option value="best">Best overall pub</option>
+                  <option value="closest_me">Closest to me</option>
+                  <option value="closest_person">Closest to selected person</option>
+                  <option value="near_area">Near a specific area</option>
+                </select>
+              </div>
+
+              <div class="conditional-row" id="selected-person-row">
+                <label for="selected-person">Selected person</label>
+                <select id="selected-person"></select>
+              </div>
+
+              <div class="conditional-row" id="target-area-row">
+                <label for="target-area">Specific area</label>
+                <input id="target-area" list="location-suggestions" placeholder="Angel, Soho, London Bridge" autocomplete="off" />
+              </div>
+
+              <section class="filters-block" aria-labelledby="preferences-heading">
+                <div class="panel-head compact">
+                  <div>
+                    <p class="section-kicker">Preferences</p>
+                    <h2 id="preferences-heading">Pub filters</h2>
+                  </div>
+                  <button class="text-button" id="clear-filters" type="button">Clear</button>
+                </div>
+
+                <div class="filter-grid" id="feature-filters"></div>
+
+                <div class="range-grid">
+                  <label class="range-control">
+                    <span>Max pint price</span>
+                    <input id="max-price" type="range" min="5.5" max="8.5" step="0.25" value="7.25" />
+                    <output id="max-price-output">GBP 7.25</output>
+                  </label>
+                  <label class="range-control">
+                    <span>Minimum rating</span>
+                    <input id="min-rating" type="range" min="3.5" max="4.8" step="0.1" value="4.0" />
+                    <output id="min-rating-output">4.0+</output>
+                  </label>
+                </div>
+
+                <div class="switch-grid">
+                  <label class="switch">
+                    <input id="open-now" type="checkbox" />
+                    <span>Open now</span>
+                  </label>
+                  <label class="switch">
+                    <input id="not-busy" type="checkbox" />
+                    <span>Not too busy</span>
+                  </label>
+                </div>
+              </section>
+
+              <div class="form-actions">
+                <button class="primary-button" type="submit">Find pubs</button>
+                <p class="form-status" id="form-status" role="status"></p>
+              </div>
+            </form>
+
+            <aside class="results-preview" aria-labelledby="preview-heading">
+              <div class="preview-head">
+                <div>
+                  <p class="section-kicker">Recommendations</p>
+                  <h2 id="preview-heading">Current shortlist</h2>
+                </div>
+                <select id="sort-results" aria-label="Sort results">
+                  <option value="best">Best match</option>
+                  <option value="travel">Most convenient</option>
+                  <option value="rating">Highest rated</option>
+                  <option value="busy">Least busy</option>
+                  <option value="price">Cheapest pint</option>
+                </select>
+              </div>
+
+              <div class="meeting-summary" id="meeting-summary"></div>
+              <div class="map-wrap" id="map-wrap"></div>
+
+              <div class="share-actions">
+                <button class="secondary-button" id="share-results" type="button">Share link</button>
+                <button class="secondary-button" id="copy-shortlist" type="button">Copy shortlist</button>
+              </div>
+
+              <div id="results-list" class="results-list"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="view-results" aria-labelledby="results-heading">
+          <div class="results-page">
+            <div class="page-head">
+              <div>
+                <p class="section-kicker">Ranked list</p>
+                <h2 id="results-heading">Recommended pubs</h2>
+              </div>
+              <button class="primary-button" id="run-from-results" type="button">Refresh results</button>
+            </div>
+            <div class="meeting-summary" id="meeting-summary-page"></div>
+            <div class="map-wrap large" id="map-wrap-page"></div>
+            <div id="results-list-page" class="results-list expanded"></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-admin" aria-labelledby="admin-heading">
+          <div class="admin-grid">
+            <div class="control-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="section-kicker">Admin</p>
+                  <h2 id="admin-heading">Pub tagging</h2>
+                </div>
+                <button class="secondary-button" id="new-pub" type="button">New pub</button>
+              </div>
+
+              <div class="field-group">
+                <label for="admin-pub-select">Pub</label>
+                <select id="admin-pub-select"></select>
+              </div>
+
+              <div class="admin-form" id="admin-form"></div>
+
+              <div class="button-row">
+                <button class="primary-button" id="save-pub" type="button">Save tags</button>
+                <button class="secondary-button" id="reset-admin" type="button">Reset local edits</button>
+              </div>
+              <p class="form-status" id="admin-status" role="status"></p>
+            </div>
+
+            <aside class="admin-list">
+              <div class="panel-head">
+                <div>
+                  <p class="section-kicker">Dataset</p>
+                  <h2>London pubs</h2>
+                </div>
+              </div>
+              <div id="admin-table"></div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="pub-detail-dialog" class="detail-dialog">
+      <button class="dialog-close" id="close-detail" type="button" aria-label="Close detail">x</button>
+      <div id="pub-detail-content"></div>
+    </dialog>
+
+    <script src="./src/data.js"></script>
+    <script src="./src/scoring.js"></script>
+    <script src="./src/app.js"></script>
+  </body>
+</html>
