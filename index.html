@@ -3,15 +3,24 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>London Pub Finder</title>
+    <title>Chooza Boozer</title>
     <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="./src/brand.css" />
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <div>
-          <p class="eyebrow">London Pub Finder</p>
-          <h1>Find the fairest pub for the group</h1>
+        <div class="brand-hero">
+          <a class="brand-lockup" href="./" aria-label="Chooza Boozer home">
+            <img class="brand-mark" src="./assets/chooza-logo.svg" alt="" />
+            <span class="brand-wordmark">
+              <span>Chooza</span>
+              <span>Boozer</span>
+            </span>
+          </a>
+          <p class="eyebrow">Less planning, more chatting.</p>
+          <h1>Find the fairest pub for everyone.</h1>
+          <p class="hero-copy">Tell us where everyone is coming from, choose the pub bits that matter, and we will find a fair London spot to meet in the middle.</p>
         </div>
         <nav class="topnav" aria-label="Main navigation">
           <button class="nav-tab is-active" data-view="search" type="button">Search</button>
@@ -99,7 +108,7 @@
               </section>
 
               <div class="form-actions">
-                <button class="primary-button" type="submit">Find pubs</button>
+                <button class="primary-button" type="submit">Find our pub</button>
                 <p class="form-status" id="form-status" role="status"></p>
               </div>
             </form>
@@ -137,7 +146,7 @@
             <div class="page-head">
               <div>
                 <p class="section-kicker">Ranked list</p>
-                <h2 id="results-heading">Recommended pubs</h2>
+                <h2 id="results-heading">Best match for the group</h2>
               </div>
               <button class="primary-button" id="run-from-results" type="button">Refresh results</button>
             </div>
@@ -192,7 +201,10 @@
     </dialog>
 
     <script src="./src/data.js"></script>
+    <script src="./src/location-patches.js"></script>
     <script src="./src/scoring.js"></script>
+    <script src="./src/postcode-patches.js"></script>
     <script src="./src/app.js"></script>
+    <script src="./src/ui-patches.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-# London Pub Finder MVP
+# Chooza Boozer MVP
 
 A working static prototype for group pub recommendations in London. It lets 2-6 people add starting points, calculates a meetup target, ranks pubs by convenience and preferences, shows a simple map, supports admin pub tagging, and creates shareable shortlists.
 
